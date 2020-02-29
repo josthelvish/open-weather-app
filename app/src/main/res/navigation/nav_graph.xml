@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/image_gallery_fragment">
+
+
+    <fragment
+        android:id="@+id/image_gallery_fragment"
+        android:name="com.example.open_weather_app.ui.WeatherOverviewFragment"
+        android:label="fragment_weather_overview"
+        tools:layout="@layout/weather_overview">
+    </fragment>
+</navigation>
+
