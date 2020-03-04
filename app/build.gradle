@@ -29,6 +29,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    dataBinding {
+        enabled = true
+    }
 }
 
 dependencies {
@@ -73,6 +77,9 @@ dependencies {
 
     // Paging
     implementation "androidx.paging:paging-runtime:$version_paging"
+
+    // Plot
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
     // Testing
     testImplementation 'junit:junit:4.12'

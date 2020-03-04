@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">open-weather-app</string>
+    <string name="city_country">Porto, Portugal</string>
+    <string name="current_date_preview">Mon, Feb 31, 1917</string>
+    <string name="weather_icon_description">Weather icon</string>
+    <string name="current_max_min_preview">Min: 10 Cº | Max: 32 Cº</string>
+    <string name="current_temp">18 Cº</string>
+    <string name="current_day_preview">Monday, April 1</string>
+    <string name="entry_temp_preview">10 Cº</string>
+    <string name="entry_hour_preview">10</string>
 </resources>
