@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.open_weather_app.R
 import com.example.open_weather_app.databinding.DayForecastItemBinding
 import com.example.open_weather_app.domain.WeatherDay
-import java.util.*
 
 class DayAdapter : RecyclerView.Adapter<DayViewHolder>() {
 

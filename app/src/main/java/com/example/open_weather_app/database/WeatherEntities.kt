@@ -19,7 +19,7 @@ data class DatabaseWeather constructor(
     val icon: String
 )
 
-fun List<DatabaseWeather>.asDomainModel(): WeatherForecast {
+fun List<DatabaseWeather>.asDomainModel(): WeatherForecast? {
     return map {
         val calendar = GregorianCalendar()
         calendar.time = Date(
@@ -33,12 +33,12 @@ fun List<DatabaseWeather>.asDomainModel(): WeatherForecast {
             temp = it.temp,
             tempMin = it.temp_min,
             tempMax = it.temp_max,
-            iconUrl = BuildConfig.ICONS_BASE_URL + it.icon + ".png"
+            iconUrl = BuildConfig.ICONS_BASE_URL + it.icon
         )
     }.toWeatherDay()
 }
 
-private fun List<WeatherEntry>.toWeatherDay(): WeatherForecast {
+private fun List<WeatherEntry>.toWeatherDay(): WeatherForecast? {
     val listByDay = mutableMapOf<Int, MutableList<WeatherEntry>>()
 
     forEach {
@@ -57,6 +57,5 @@ private fun List<WeatherEntry>.toWeatherDay(): WeatherForecast {
         list.add(WeatherDay(mutableList[0].calendar, mutableList))
     }
 
-    //todo review internet signal
     return WeatherForecast(list.removeAt(0), list)
 }

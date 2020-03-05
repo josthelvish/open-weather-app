@@ -2,11 +2,10 @@ package com.example.open_weather_app.ui
 
 import android.app.Application
 import android.content.Context
-import android.provider.Settings.Global.getString
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.open_weather_app.R
 import com.example.open_weather_app.database.getDatabase
 import com.example.open_weather_app.domain.WeatherForecast
 import com.example.open_weather_app.repository.WeatherRepository
@@ -19,12 +18,8 @@ class WeatherOverviewViewModel(application: Application) : ViewModel() {
 
     private val viewModelJob = SupervisorJob()
     private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
-
     private val database = getDatabase(application)
     private val weatherRepository = WeatherRepository(database)
-//    private val sharedPref = application?.getSharedPreferences(
-//        getString(R.string.preference_file_key), Context.MODE_PRIVATE
-//    )
 
     init {
         viewModelScope.launch {

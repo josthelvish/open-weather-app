@@ -16,90 +16,80 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/swipe_refresh"
+        <LinearLayout
+            android:id="@+id/ll_current_weather"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:background="@color/colorDark"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/rv_weather"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0">
 
-            <LinearLayout
-                android:id="@+id/ll_current_weather"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/tv_city"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/colorDark"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toTopOf="@+id/rv_weather"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0">
+                android:layout_gravity="center"
+                android:fontFamily="@font/roboto_mono_medium"
+                android:text="@string/city_country"
+                android:textSize="14sp" />
 
-                <TextView
-                    android:id="@+id/tv_city"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:fontFamily="@font/roboto_mono_medium"
-                    android:text="@string/city_country"
-                    android:textSize="14sp" />
+            <TextView
+                android:id="@+id/tv_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/roboto_mono_medium"
+                android:text="@{viewModel.weather.currentDay.shortDate}"
+                android:textSize="14sp"
+                tools:text="@string/current_date_preview" />
 
-                <TextView
-                    android:id="@+id/tv_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:fontFamily="@font/roboto_mono_medium"
-                    android:text="@{viewModel.weather.currentDay.shortDate}"
-                    android:textSize="14sp"
-                    tools:text="@string/current_date_preview" />
+            <ImageView
+                android:id="@+id/iv_weather_icon"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center"
+                android:contentDescription="@string/weather_icon_description"
+                tools:src="@drawable/preview_icon_large" />
 
-                <ImageView
-                    android:id="@+id/iv_weather_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:contentDescription="@string/weather_icon_description"
-                    tools:src="@drawable/preview_icon_large" />
+            <TextView
+                android:id="@+id/tv_current_temp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/roboto_mono_medium"
+                android:text="@{String.format(@string/append_celsius, viewModel.weather.currentDay.currentTemp.temp)}"
+                android:textSize="14sp"
+                tools:text="@string/current_temp" />
 
-                <TextView
-                    android:id="@+id/tv_current_temp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:fontFamily="@font/roboto_mono_medium"
-                    android:text=""
-                    android:textSize="14sp"
-                    tools:text="@string/current_temp" />
+            <TextView
+                android:id="@+id/tv_temp_max_min"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/roboto_mono_medium"
+                android:text="@{String.format(@string/current_max_min, viewModel.weather.currentDay.currentTemp.tempMin, viewModel.weather.currentDay.currentTemp.tempMax)}"
+                tools:text="@string/current_max_min_preview" />
 
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/lchart_plot"
+                android:layout_width="match_parent"
+                android:layout_height="200dp" />
 
-                <TextView
-                    android:id="@+id/tv_temp_max_min"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:fontFamily="@font/roboto_mono_medium"
-                    android:text=""
-                    tools:text="@string/current_max_min_preview" />
+        </LinearLayout>
 
-                <com.github.mikephil.charting.charts.LineChart
-                    android:id="@+id/lchart_plot"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp">
-
-                </com.github.mikephil.charting.charts.LineChart>
-            </LinearLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_weather"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ll_current_weather"
-                tools:listitem="@layout/day_forecast_item" />
-
-        </android.support.v4.widget.SwipeRefreshLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_weather"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ll_current_weather"
+            tools:listitem="@layout/day_forecast_item" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </layout>

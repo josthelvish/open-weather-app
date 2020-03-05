@@ -7,6 +7,10 @@ data class WeatherDay(
     val date: Calendar,
     val weather: List<WeatherEntry>
 ) {
+
+    val currentTemp: WeatherEntry
+        get() = weather.first()
+
     val shortDate: String
         get() = date.dateAsString(Calendar.SHORT)
 

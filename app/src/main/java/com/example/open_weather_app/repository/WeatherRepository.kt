@@ -1,5 +1,6 @@
 package com.example.open_weather_app.repository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import com.example.open_weather_app.database.WeatherDatabase
@@ -22,7 +23,7 @@ class WeatherRepository(private val database: WeatherDatabase) {
     suspend fun refreshWeather() {
         withContext(Dispatchers.IO) {
             val entries = Network.entries.getWeatherAPIInfo().await()
-            database.weatherEntryDao.insertAll(*entries.asDatabaseModel())
+            database.weatherEntryDao.updateEntries(*entries.asDatabaseModel())
         }
     }
 }

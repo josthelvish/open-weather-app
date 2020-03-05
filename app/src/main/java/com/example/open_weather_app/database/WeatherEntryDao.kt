@@ -8,8 +8,14 @@ interface WeatherEntryDao {
     @Query("SELECT * FROM databaseWeather")
     fun getWeatherEntries(): LiveData<List<DatabaseWeather>>
 
+    @Transaction
+    fun updateEntries(vararg entries: DatabaseWeather) {
+        clearEntries()
+        insertAll(entries)
+    }
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(vararg entries: DatabaseWeather)
+    fun insertAll(entries: Array<out DatabaseWeather>)
 
     @Query("DELETE FROM databaseWeather")
     fun clearEntries()

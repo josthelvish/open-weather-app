@@ -7,6 +7,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.open_weather_app.R
+import com.example.open_weather_app.utils.ICON_TYPE_NORMAL
 import com.example.open_weather_app.databinding.WeatherEntryItemBinding
 import com.example.open_weather_app.domain.WeatherEntry
 import java.util.*
@@ -36,10 +37,23 @@ class EntryAdapter(entries: List<WeatherEntry>) : RecyclerView.Adapter<EntryView
     override fun getItemCount() = entries.size
 
     override fun onBindViewHolder(holder: EntryViewHolder, position: Int) {
+
         holder.viewDataBinding.also {
-            it.tvEntryTemp.text = """${entries[position].temp.toInt()}℃"""
-            it.tvEntryHour.text = entries[position].calendar.get(Calendar.HOUR_OF_DAY).toString()
-            Glide.with(holder.itemView.context).load(entries[position].iconUrl).into(it.ivEntry)
+            val context = holder.itemView.context
+
+            it.tvEntryTemp.text = context.getString(
+                R.string.append_celsius,
+                entries[position].temp
+            )
+
+            it.tvEntryHour.text = context.getString(
+                R.string.append_hours,
+                entries[position].calendar.get(Calendar.HOUR_OF_DAY).toString()
+            )
+
+            //inflating the icon
+            Glide.with(context).load(entries[position].iconUrl + ICON_TYPE_NORMAL)
+                .into(it.ivEntry)
         }
     }
 }

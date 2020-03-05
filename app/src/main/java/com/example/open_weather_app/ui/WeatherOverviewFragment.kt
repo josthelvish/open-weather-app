@@ -5,17 +5,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.open_weather_app.R
 import com.example.open_weather_app.databinding.WeatherOverviewBinding
 import com.example.open_weather_app.domain.WeatherEntry
 import com.example.open_weather_app.domain.WeatherForecast
+import com.example.open_weather_app.utils.ICON_TYPE_LARGE
+import com.example.open_weather_app.utils.ICON_TYPE_NORMAL
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.Entry
@@ -49,48 +52,40 @@ class WeatherOverviewFragment : Fragment() {
                 forecast?.apply {
                     viewModelAdapter?.days = forecast.longForecast
                     drawLineChart(forecast.currentDay.weather)
+                    updateCurrentIcon(forecast.currentDay.currentTemp)
+
                 }
             })
     }
 
+    private fun updateCurrentIcon(currentTemp: WeatherEntry) {
+        val view = view?.findViewById<ImageView>(R.id.iv_weather_icon)
+        if (view != null) {
+
+            Glide.with(view.context).load(currentTemp.iconUrl + ICON_TYPE_LARGE)
+                .into(view)
+        }
+    }
+
     private fun drawLineChart(weather: List<WeatherEntry>) {
         lineChartView = view?.findViewById(R.id.lchart_plot)!!
-        val revenueComp1 = arrayListOf(10000f, 20000f, 30000f, 60000f)
-        val revenueComp2 = arrayListOf(12000f, 23000f, 35000f, 48000f)
-        val entries1 = revenueComp1.mapIndexed { index, arrayList ->
+
+        val temperature = weather.map { it.temp }.toList()
+        val entries1 = temperature.mapIndexed { index, arrayList ->
             Entry(index.toFloat(), arrayList)
         }
 
-        val entries2 = revenueComp2.mapIndexed { index, arrayList ->
-            Entry(index.toFloat(), arrayList)
-        }
-
-        val lineDataSet1 = LineDataSet(entries1, "")
+        val lineDataSet1 = LineDataSet(entries1, "Temperature")
         lineDataSet1.color = Color.RED
-        //lineDataSet1.setDrawValues(true)
         lineDataSet1.setAxisDependency(YAxis.AxisDependency.LEFT)
 
-//        val lineDataSet2 = LineDataSet(entries2, "Company 2")
-//        lineDataSet2.color = Color.BLUE
-//        lineDataSet1.setDrawValues(false)
-//        lineDataSet2.setAxisDependency(YAxis.AxisDependency.LEFT)
-//
-//        val lineDataSets = listOf(lineDataSet1, lineDataSet2)
         val lineDataSets = listOf(lineDataSet1)
-        lineChartView.axisLeft.mAxisMaximum = 1f
-        lineChartView.axisLeft.mAxisMinimum = -1f
-        lineChartView.axisLeft.mAxisRange = 2f
-
         val lineData = LineData(lineDataSets)
-        lineChartView.axisLeft.setDrawAxisLine(false)
-        lineChartView.axisLeft.setDrawTopYLabelEntry(false)
-        lineChartView.axisRight.setDrawGridLines(false)
-        lineChartView.xAxis.setDrawGridLines(false)
-        lineChartView.axisLeft.setDrawGridLines(false)
 
-
+        lineChartView.axisLeft.setDrawLabels(false);
+        lineChartView.axisRight.setDrawLabels(false);
+        lineChartView.xAxis.setDrawLabels(false);
         lineChartView.data = lineData
-
         lineChartView.invalidate()
 
     }
