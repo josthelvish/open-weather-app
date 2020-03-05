@@ -7,4 +7,4 @@ https://openweathermap.org/appid
 In the openweather.properties file, replace your valid API key by the `<replace-by-valid-key>` text.
 
 
-![Screen](doc/screen.jpg)
+![Screen](doc/screen_overview.jpg)
