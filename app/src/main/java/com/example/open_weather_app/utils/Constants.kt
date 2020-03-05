@@ -6,8 +6,6 @@ const val API_CITY_ID: String = "6458924"
 const val API_UNITS: String = "metric"
 const val ICON_TYPE_NORMAL: String = ".png"
 const val ICON_TYPE_LARGE: String = "@2x.png"
-const val REFRESH_INTERVAL_MILLIS: Long = 660000
-const val PREF_NAME = "LATEST_UPDATE"
 
 fun Calendar.dateAsString(style: Int): String {
     val dayOfWeek = this.getDisplayName(Calendar.DAY_OF_WEEK, style, Locale.getDefault())
