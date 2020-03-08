@@ -50,10 +50,11 @@ class WeatherOverviewFragment : Fragment() {
             viewLifecycleOwner,
             Observer<WeatherForecast> { forecast ->
                 forecast?.apply {
-                    viewModelAdapter?.days = forecast.longForecast
-                    drawLineChart(forecast.currentDay.weather)
-                    updateCurrentIcon(forecast.currentDay.currentTemp)
-
+                    if(forecast.longForecast.isNotEmpty()){
+                        viewModelAdapter?.days = forecast.longForecast
+                        drawLineChart(forecast.currentDay.weather)
+                        updateCurrentIcon(forecast.currentDay.currentTemp)
+                    }
                 }
             })
     }

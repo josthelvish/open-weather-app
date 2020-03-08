@@ -57,5 +57,10 @@ private fun List<WeatherEntry>.toWeatherDay(): WeatherForecast? {
         list.add(WeatherDay(mutableList[0].calendar, mutableList))
     }
 
-    return WeatherForecast(list.removeAt(0), list)
+    if(list.isNotEmpty()){
+        return WeatherForecast(list.removeAt(0), list)
+    }else{
+        return WeatherForecast(WeatherDay(), list)
+    }
+
 }
